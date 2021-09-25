@@ -14,13 +14,5 @@ class ConnectionsDB {
     return response;
   }
 }
-/*
-
-const fuckMe = new ConnectionsDB('MySQL');
-for (let i = 0; i < 10; i++) {
-  console.log(await fuckMe.getRow(10,2000));
-}
-*/
-
 
 export default ConnectionsDB;
