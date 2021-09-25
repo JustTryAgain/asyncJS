@@ -1,31 +1,14 @@
-//Create 3 classes of DataBases and DB_connection
-//Create method asyncConnect in each class which return new DB_connection
-//create Db_connection method async getRow
-//Create function sleep for example of async work
-//Start 3 connection from 3 Data Bases asynchronously
-import {MongoDB} from "./data/MongoDB.js";
-import {PostgreSQL} from "./data/PostgreSQL.js";
-import {MySQL} from "./data/MySQL.js";
+import {random} from "./data/helper.js";
+import dbArr from "./data/dataBaseArrayList.js";
 
-let mongo = new MongoDB();
-let postgresql = new PostgreSQL();
-let mysql = new MySQL();
-let connectionMongo = mongo.connect().then(() => {
-  console.log('MongoDB success connected!');
-});
+const someDbQuery = async (numOfReqs)=> {
+    for (let i = 0; i < numOfReqs; i++) {
+        const requestArr = await Promise.all(
+                dbArr.map(db => db.getRow(random(0, 100), random(500,3000)))
+        );
+        requestArr.forEach(rq => console.log(rq));
+    }
+    return Promise.resolve('Request completed!');
+}
 
-let connectionPostgreSQL = await postgresql.connect();
-
-
-
-
-let connectionMYSQL = mysql.connect().then(() => {
-  console.log('MySQL success connected!');
-});
-
-connectionPostgreSQL.getRow(25).then((row) => {
-  console.log(row)
-});
-
-
-
+someDbQuery(10).then(console.log);

@@ -1,15 +1,18 @@
-import {ConnectionsDB} from "../connectionsDB.js";
-import {sleep} from "./helper.js";
+import ConnectionsDB from "../connectionsDB.js";
+import {random, sleep} from "./helper.js";
 
-export class MySQL {
+class MySQL {
+    constructor() {
+        this.name =  'MySQL';
+        return this.connect();
+    }
 
-  constructor() {
-
-  }
-
-  async connect() {
-
-    await sleep(3000);
-    return new ConnectionsDB();
-  }
+    async connect() {
+        await sleep(random(1000,3000));
+        console.log('Successful ' + this.name + ' is connected'+ ' is connected'
+            + ' Time: ' + Date.now());
+        return new ConnectionsDB(this.name);
+    }
 }
+
+export default MySQL;
